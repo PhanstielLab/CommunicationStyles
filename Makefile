@@ -1,26 +1,29 @@
 .PHONY: clean
 
 objects :=\
-	data/greeting.rds\
-	plots/example.pdf\
-	tables/example.txt
+	tables/longFormScores.txt\
+	tables/selfScoreTable.txt\
+	tables/groupScoreTable.txt\
+	plots/selfScore.pdf\
+	plots/groupScore.pdf\
+	plots/groupToSelfScore.pdf
 
 all: $(objects)
 
 clean:
 	rm -rf $(objects)
 
-data/greeting.rds:\
-	scripts/utils/sayHello.R\
-	scripts/processing/makeGreeting.R
-		mkdir -p data
-		Rscript scripts/processing/makeGreeting.R
+tables/longFormScores.txt\
+tables/selfScoreTable.txt\
+tables/groupScoreTable.txt:\
+	scripts/processing/makeAssessmentTables.R
+		mkdir -p tables
+		Rscript scripts/processing/makeAssessmentTables.R
 
-plots/example.pdf\
-tables/example.txt:\
-	scripts/utils/sayHello.R\
-	data/greeting.rds\
-	scripts/analysis/example.R
-		mkdir -p plots tables
-		Rscript scripts/analysis/example.R
-		
+plots/selfScore.pdf\
+plots/groupScore.pdf\
+plots/groupToSelfScore.pdf:\
+	tables/longFormScores.txt\
+	scripts/analysis/visualizeCommunicationStyles.R
+		mkdir -p plots
+		Rscript scripts/analysis/visualizeCommunicationStyles.R
