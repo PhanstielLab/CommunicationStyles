@@ -35,7 +35,8 @@ colnames(combined)[2] <- "yearsInLab"
 
 
 ## Visualize self score
-ggplot(data=combined, aes(x=askTellSelf, y=relationshipTaskSelf)) +
+selfScore <- 
+  ggplot(data=combined, aes(x=askTellSelf, y=relationshipTaskSelf)) +
   ylim(c(-100, 100)) +
   xlim(c(-100, 100)) +
   geom_hline(yintercept=0, lty=3, color="grey50") +
@@ -58,38 +59,44 @@ ggplot(data=combined, aes(x=askTellSelf, y=relationshipTaskSelf)) +
   theme_bw() +
   theme(panel.grid=element_blank(),
         axis.title=element_blank())
-ggsave(filename="plots/selfScore.pdf", width=11, height=10)
+ggsave(filename="plots/selfScore.pdf",
+       plot=selfScore,
+       width=11, height=10)
 
 ## Visualize group score
-ggplot(data=combined, aes(x=askTellGroup, y=relationshipTaskGroup)) +
-  ylim(c(-100, 100)) +
-  xlim(c(-100, 100)) +
-  geom_hline(yintercept=0, lty=3, color="grey50") +
-  geom_vline(xintercept=0, lty=3, color="grey50") + 
-  geom_text(aes(label=person)) +
-  annotate(geom='label',
-           size=5,
-           color="grey50",
-           label.size=NA,
-           x=c(0, 0, -100, 100),
-           y=c(-100, 100, 0, 0),
-           label=c("TASK", "RELATIONSHIP", "TELL", "ASK")) +
-  annotate(geom='label',
-           size=5,
-           color="grey50",
-           label.size=NA,
-           x=c(-80, -80, 80, 80),
-           y=c(-80, 80, 80, -80),
-           label=c("DOER", "INFLUENCER", "CONNECTOR", "THINKER")) +
-  theme_bw() +
-  theme(panel.grid=element_blank(),
-        axis.title=element_blank())
-ggsave(filename="plots/groupScore.pdf", width=11, height=10)
+groupScore <- 
+  ggplot(data=combined, aes(x=askTellGroup, y=relationshipTaskGroup)) +
+    ylim(c(-100, 100)) +
+    xlim(c(-100, 100)) +
+    geom_hline(yintercept=0, lty=3, color="grey50") +
+    geom_vline(xintercept=0, lty=3, color="grey50") + 
+    geom_text(aes(label=person)) +
+    annotate(geom='label',
+             size=5,
+             color="grey50",
+             label.size=NA,
+             x=c(0, 0, -100, 100),
+             y=c(-100, 100, 0, 0),
+             label=c("TASK", "RELATIONSHIP", "TELL", "ASK")) +
+    annotate(geom='label',
+             size=5,
+             color="grey50",
+             label.size=NA,
+             x=c(-80, -80, 80, 80),
+             y=c(-80, 80, 80, -80),
+             label=c("DOER", "INFLUENCER", "CONNECTOR", "THINKER")) +
+    theme_bw() +
+    theme(panel.grid=element_blank(),
+          axis.title=element_blank())
+ggsave(filename="plots/groupScore.pdf",
+       plot=groupScore,
+       width=11, height=10)
 
 ## Visualize differences between self and group
-ggplot(data=combined, aes(x=askTellGroup,
-                          y=relationshipTaskGroup,
-                          color=yearsInLab)) +
+groupToSelfScore <- 
+  ggplot(data=combined, aes(x=askTellGroup,
+                            y=relationshipTaskGroup,
+                            color=yearsInLab)) +
   ylim(c(-100, 100)) +
   xlim(c(-100, 100)) +
   geom_hline(yintercept=0, lty=3, color="grey50") +
@@ -120,4 +127,6 @@ ggplot(data=combined, aes(x=askTellGroup,
   theme_bw() +
   theme(panel.grid=element_blank(),
         axis.title=element_blank())
-ggsave(filename="plots/groupToSelfScore.pdf", width=11.5, height=10)
+ggsave(filename="plots/groupToSelfScore.pdf",
+       plot=groupToSelfScore,
+       width=11.5, height=10)
